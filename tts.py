@@ -1,30 +1,59 @@
-# Import the required module for text 
-# to speech conversion
+# Import the required module for text to speech conversion
 from gtts import gTTS
-# This module is imported so that we can 
-# play the converted audio
+# This module is imported so that we can do some os operations
 import os
 
-f=open("inputtextfiles\\input.txt","r",encoding="utf-8")
-# The text that you want to convert to audio
-mytext = f.read().strip()
-mytext=" ".join(mytext.split()) 
-# print(mytext)
+
+
+# print(mytextArr)
+
+def getAllFiles():
+    filesInDir=os.listdir("inputtextfiles")
+    print(f"input files={filesInDir}")
+    return filesInDir
+
+def empytVOFiles():
+    filesInDir=os.listdir("outputVOfiles")
+    if len(filesInDir)>0:
+        for file in filesInDir:
+            os.remove(f"outputVOfiles\\{file}")
+        print("emptied the folder")
+    else:
+        print("folder is empty")
+    # print(os.listdir("outputVOfiles"))'
+
+inputFiles=getAllFiles()
+if len(inputFiles)>0:
+    empytVOFiles()
+    language = 'en'
+    accent="us"#"co.uk"
+    for id,inpFile in enumerate(inputFiles):
+        try:
+            f=open(f"inputtextfiles\\{inpFile}","r",encoding="utf-8")
+            
+            # The text that you want to convert to audio
+            fileText = f.read().strip()
+            fileName=inpFile.split(".")[0]
+            myobj = gTTS(text=fileText, lang=language,tld=accent, slow=False)
+            myobj.save(f"outputVOfiles\\{fileName}.mp3")
+            # export to mp3
+            os.system(f"start outputVOfiles\\{fileName}.mp3")
+        except:
+            print("something went wrong!")
+
+# os.system("start outputVOfiles\\output.mp3")
+
+
+
+#Algorithm
 # text to speech setup and convert the speech in playable mp3 file
-language = 'en'
-myobj = gTTS(text=mytext, lang=language, slow=False)
-myobj.save("outputVOfiles\\output.mp3")
-# export to mp3
-
-os.system("start outputVOfiles\\output.mp3")
-
 # Passing the text and language to the engine, 
 # here we have marked slow=False. Which tells 
 # the module that the converted audio should 
 # have a high speed
-
 # Saving the converted audio in a mp3 file named
-# welcome 
-
-
 # Playing the converted file
+
+
+# unused code
+# mytext=" ".join(mytext.split()) 
