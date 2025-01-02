@@ -26,7 +26,7 @@ inputFiles=getAllFiles()
 if len(inputFiles)>0:
     empytVOFiles()
     language = 'en'
-    accent="us"#"co.uk"
+    accent="co.uk" #"us"
     for id,inpFile in enumerate(inputFiles):
         try:
             f=open(f"inputtextfiles\\{inpFile}","r",encoding="utf-8")
